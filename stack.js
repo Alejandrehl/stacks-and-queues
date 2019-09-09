@@ -34,33 +34,49 @@ What's the time complexity?
  */
 
 function Stack(capacity) {
-    // implement me...
+    this._capacity = capacity || Infinity;
+    this._storage = {};
+    this._count = 0;
 }
 
+// 0(1)
 Stack.prototype.push = function(value) {
-    // implement me...
-};
-// Time complexity:
+    if (this._count < this._capacity) {
+        this._storage[this._count++] = value;
+        return this._count;
+    }
 
+    return "Max capacity already reached. Remove element before adding a new one.";
+};
+
+// 0(1)
 Stack.prototype.pop = function() {
-    // implement me...
-};
-// Time complexity:
+    let value = this._storage[--this._count];
+    delete this._storage[this._count];
 
-Stack.prototype.peek = function() {
-    // implement me...
+    if (this._count < 0) {
+        this._count = 0;
+    }
+
+    return value;
 };
-// Time complexity:
+
+// 0(1)
+Stack.prototype.peek = function() {
+    return this._storage(this._count-1);
+};
 
 Stack.prototype.count = function() {
-    // implement me...
+    return this._count;
 };
-// Time complexity:
 
+const myStack = new Stack(3);
+myStack.push(5);
 
 /*
 *** Exercises:
-1. Implement a stack with a min method which returns the minimum element currently in the stack. This method should have O(1) time complexity. Make sure your implementation handles duplicates.
+1. Implement a stack with a min method which returns the minimum element currently in the stack.
+* This method should have O(1) time complexity. Make sure your implementation handles duplicates.
 2. Sort a stack so that its elements are in ascending order.
 3. Given a string, determine if the parenthesis in the string are balanced.
 Ex: balancedParens( 'sqrt(5*(3+8)/(4-2))' ) => true
